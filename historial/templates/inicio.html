@@ -1,0 +1,16 @@
+{% extends 'basebootstrap.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}
+INICIO
+{% endblock %}
+
+{% block content %}
+<h1> {{ titulo }} </h1>
+
+{% if form %}
+<form method="POST" action="">{% csrf_token %}
+{{ form|crispy }}
+<input type='submit' value='Registrarse'></input>
+</form>
+{% endif %}
+{% endblock %}/
