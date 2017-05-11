@@ -94,9 +94,30 @@ class AdminMamo(admin.ModelAdmin):
         "birads",
         "eg",
         "hallazgos",
-        "des_birads"
+        "des_birads",
+        "mamas",
+        "consistencia",
+        "hallazgo_si",
     ]
-    radio_fields = {'densidad': admin.HORIZONTAL, 'birads': admin.VERTICAL}
+    fieldsets = (
+            ('MAMOGRAFIA', {
+            'fields': ('mamoDespi', 'mamoDiag','antecedentes', 'otros',
+                        'densidad', 'descripcion')
+            }),
+            ('BIRADS', {
+                'fields': ('birads',)
+            }),
+            ('ECOGRAFIA MAMARIA', {
+                'fields': ('eg', 'hallazgos', 'des_birads')
+            }),
+            ('PALPACION', {
+                'fields': ('mamas', 'consistencia', 'hallazgo_si','descripcio')
+            }),
+    )
+    radio_fields = {'densidad': admin.HORIZONTAL, 'birads': admin.VERTICAL,
+                    'mamas':admin.VERTICAL,
+                    'consistencia':admin.VERTICAL,
+                    'hallazgo_si':admin.VERTICAL,}
 
 class AdminAntecedentes(admin.ModelAdmin):
     form = AntecedentesForm
@@ -112,26 +133,27 @@ class AdminAntecedentes(admin.ModelAdmin):
                     "amamanto","tiempo","anticonceptivos",
                     "tiempo_anti"]
     fieldsets = (
-        ('Paciente',{
+        ('PACIENTE',{
             'fields':('registrado','peso','talla','IMC',('dire_actual','de_quien')),
         }),
-        ('Antecedentes Patologicos Personales',{
+        ('ANTECEDENTES PATOLOGICOS PERSONALES',{
             'fields':('cirugia_mamaria', 'otras_cirugias', 'antecedentes','atec_rt')
         }),
-        ('Antecedentes Familiares',{
-            'fields': (('ante_fam','cancer_detalles'),'cancer_mama','cancer_ovario',
+        ('ANTECEDENTES FAMILIARES',{
+            'fields': (('ante_fam','candetalles'),'cancer_mama','cancer_ovario',
                        'cancer_prostata','cancer_colon', 'cancer_otro')
         }),
-        ('Antecedentes Hormonales',{
+        ('ANTECEDENTES HORMONALES',{
             'fields': (('hijos','numero','edad_primero','amamanto','tiempo'),
                        'anticonceptivos','tiempo_anti')
         }),
-        ('Menopausia', {
+        ('MENOPAUSIA', {
             'fields': (('menopausia', 'edad_meno', 'anos_repro'), ('trh', 'trh_opciones'))
         }),
-        ('Abortos', {
+        ('ABORTOS', {
             'fields': ('abortos', 'cuantos_abortos', 'primera_gesta', 'edad_gestacional')
         }),
+
     )
     radio_fields = {'cirugia_mamaria':admin.HORIZONTAL,
                     'otras_cirugias':admin.HORIZONTAL,
@@ -150,7 +172,9 @@ class AdminAntecedentes(admin.ModelAdmin):
                     'trh':admin.HORIZONTAL,
                     'trh_opciones':admin.HORIZONTAL,
                     'abortos':admin.HORIZONTAL,
-                    'primera_gesta':admin.HORIZONTAL}
+                    'primera_gesta':admin.HORIZONTAL,
+                    }
+
 
 # class PersonAdmin(admin.ModelAdmin):
 #     form = PersonForm
@@ -164,3 +188,4 @@ admin.site.register(Mamografia,AdminMamo)
 
 admin.site.site_header = "FUNCA"
 admin.site.site_title = "Administracion del sitio"
+

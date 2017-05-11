@@ -30,6 +30,7 @@ HACER = (
         ('NU', 'NUNCA'),
     )
 CANCER = (
+    ('N','No'),
     ('CAM', 'Ca de Mama'),
     ('CAO', 'Ca de Ovario'),
     ('Otro', 'Otro Ca'),
@@ -92,6 +93,7 @@ HALLAZGO = (
     ('O', 'Otros')
 )
 ATEC = (
+    ('N','No'),
     ('T','Toracica'),
     ('G','Ginecologica'),
     ('O', 'Otro')
@@ -151,23 +153,23 @@ class Mamografia(models.Model):
     #     on_delete=models.CASCADE,
     #     #primary_key=True
     # )
-    registrado = models.ForeignKey(Persona)
+    registrado = models.ForeignKey(Persona, unique=True)
     mamoDespi = models.CharField('Mamografia despistaje',max_length=100, null=True, blank=True)
     mamoDiag = models.CharField('Mamografia Diagnostica',max_length=100, null=True, blank=True)
     nodulo = models.CharField('Nodulo', max_length=100, null=True, blank=True)
     antecedentes = models.CharField('Antecedentes familiares', max_length=100, null=True, blank=True)
     otros = models.CharField('Otros factores de riesgo',max_length=100, null=True, blank=True)
-    densidad = models.CharField('Densidad', choices=DENSI, null=True, max_length=3)
-    descripcion=models.CharField('Descripcion', max_length=100, null=True)
-    birads = models.CharField('BIRADS', choices = BIRAD, null= True, max_length=3)
-    eg = models.CharField('EG', max_length=100, null=True)
-    hallazgos = models.CharField('Hallazgos?, si o no y descripcion', max_length=100, null=True)
-    des_birads = models.CharField('Birads', max_length=150, null=True)
+    densidad = models.CharField('Densidad', choices=DENSI, null=True, max_length=3, blank=True)
+    descripcion=models.CharField('Descripcion', max_length=100, null=True, blank=True)
+    birads = models.CharField('BIRADS', choices = BIRAD, null= True, max_length=3, blank=True)
+    eg = models.CharField('EG', max_length=100, null=True, blank=True)
+    hallazgos = models.CharField('Hallazgos?, si o no y descripcion', max_length=100, null=True,blank=True)
+    des_birads = models.CharField('Birads', max_length=150, null=True, blank=True)
     mamas =  models.CharField('Mamas', choices= MAMA,null=True, blank=True, max_length=5)
     consistencia = models.CharField('Consistencia', choices=CONSISTENCIA, null=True, blank=True,max_length=5)
-    # hallazgo = models.CharField('Hallazgo', choices=SIONO, null=True, blank=True)
+    #hallazgo = models.CharField('Hallazgo', choices=SIONO, null=True, blank=True, max_length= 5 )
     hallazgo_si = models.CharField('Hallazgo', choices=HALLAZGO, null=True, blank=True,max_length=5)
-
+    descripcio = models.CharField('Descripcion', max_length=100, null=True, blank=True)
 
     def __unicode__(self):
         return str(self.registrado)
@@ -185,24 +187,24 @@ class Antecedentes(models.Model):
     #     #primary_key=True
     #
     # )
-    registrado = models.ForeignKey(Persona)
+    registrado = models.ForeignKey(Persona,unique=True)
     dire_actual= models.CharField(verbose_name='Direccion Actual',blank=True, null=True,max_length=50)
     de_quien= models.CharField(verbose_name='De quien es esta direccion?',blank=True, null=True,max_length=50)
     peso = models.IntegerField(blank=True, null=True)
     talla = models.IntegerField(blank=True, null=True)
     IMC= models.IntegerField(blank=True, null=True)
-    cirugia_mamaria = models.CharField('Cirugias Mamarias',null=True, blank=True,default='N', max_length=3, choices=SION)
-    otras_cirugias = models.CharField('Otras Cirugias',null=True, blank=True,default='N', max_length=3, choices=SION)
-    antecedentes = models.CharField('Antecedentes de Cancer',null=True, blank=True,default='Otro', max_length=8, choices=CANCER)
-    atec_rt= models.CharField('Atec de RT', choices=ATEC, max_length=5, null=True, blank=True)
-    ante_fam = models.CharField('Hay antecedentes familiares?', null=True,blank=True,default='N', max_length=3, choices=SION)
-    detalles = models.CharField
+    cirugia_mamaria = models.CharField('Cirugias Mamarias',default='N', max_length=3, choices=SION)
+    otras_cirugias = models.CharField('Otras Cirugias',default='N', max_length=3, choices=SION)
+    antecedentes = models.CharField('Antecedentes de Cancer',default='N', max_length=8, choices=CANCER)
+    atec_rt= models.CharField('Atec de RT', choices=ATEC, default=False,max_length=5, null=True, blank=True)
+    ante_fam = models.CharField('Hay antecedentes familiares?',default='N', max_length=3, choices=SION)
+    detalles = models.CharField('detalles', null=True, blank=True, max_length=100)
     cancer_mama = models.CharField(verbose_name='Cancer de mama', default='N', max_length=3, choices=SION)
     cancer_ovario = models.CharField(verbose_name='Cancer de ovario', default='N', max_length=3, choices=SION)
-    cancer_prostata = models.CharField(verbose_name='Cancer de prostata', default='N', max_length=3, choices=SION)
+    cancer_prostata = models.CharField(verbose_name='Cancer de prostata', default   ='N', max_length=3, choices=SION)
     cancer_colon = models.CharField(verbose_name='Cancer de colon', default='N', max_length=3, choices=SION)
     cancer_otro = models.CharField(verbose_name='Otro cancer', default='N', max_length=3, choices=SION)
-    cancer_detalles = models.CharField(verbose_name='Detalles', null=True, blank=True, max_length=100)
+    candetalles = models.CharField(verbose_name='Detalles', null=True, blank=True, max_length=100)
     hijos = models.CharField(default='N',max_length=3, choices=SION)
     numero = models.IntegerField(null=True, blank=True)
     edad_primero = models.IntegerField(verbose_name='Edad del Primero?', blank=True, null=True)
