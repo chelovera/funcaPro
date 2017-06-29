@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 DATE_INPUT_FORMATS = ('%dd-%mm-%YYYY')
 
 # Quick-start development settings - unsuitable for production
@@ -64,11 +64,17 @@ ROOT_URLCONF = 'historial.urls'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+TEMPLATE_DIRS = (
+
+    os.path.join(BASE_DIR, 'templates/'),
+
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # 'DIRS': [os.path.join(BASE_DIR, '~/PycharmProjects/funca/funca/funca-master/proyecto-formulario-master')]
         'DIRS': [os.path.join(BASE_DIR, 'templates/admin')]
-        #'DIRS': [os.path.join(BASE_DIR, 'templates')]
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -132,13 +138,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/templates/'
+STATIC_URL = '/static/'
 
 PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static"),
-        #'/var/www/static',
+        '~/PycharmProjects/funca/funca/funca-master/proyecto-formulario-master/static',
 
 ]

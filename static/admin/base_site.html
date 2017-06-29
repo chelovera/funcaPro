@@ -5,9 +5,10 @@
     {% include 'autocomplete_light/static.html' %}
 {% endblock %}
 
-{% block title %}{{ title }} | {{ site_title|default:_('FUNCA') }}{% endblock %}
-{% load static %}
-<img src="{% static "static/FUNCA.jpg" %}" alt="FuncaLogo"/>
+{% block title %}{{ title }} | {{ site_title|default:_('FUNCA') }}{% load static %}
+<img src = {% static "images/funca.png" %}alt="Logotipo"/>
+    <p>Hola probando</p>
+{% endblock %}
 
 {% block branding %}
 <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('FUNCA') }}</a></h1>

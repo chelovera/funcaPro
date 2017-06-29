@@ -101,29 +101,34 @@ class AdminMamo(admin.ModelAdmin):
     ]
     fieldsets = (
             ('MAMOGRAFIA', {
-            'fields': ('mamoDespi', 'mamoDiag','antecedentes', 'otros',
+            'fields': ('registrado','mamoDespi', 'mamoDiag',('antecedentes', 'antecedentes1'), ('otros','otros1'),
                         'densidad', 'descripcion')
             }),
             ('BIRADS', {
                 'fields': ('birads',)
+
             }),
+
             ('ECOGRAFIA MAMARIA', {
-                'fields': ('eg', 'hallazgos', 'des_birads')
+                'fields': ('eg', ('hallazgos','hallazgo'), 'des_birads')
             }),
             ('PALPACION', {
                 'fields': ('mamas', 'consistencia', 'hallazgo_si','descripcio')
             }),
     )
-    radio_fields = {'densidad': admin.HORIZONTAL, 'birads': admin.VERTICAL,
+    radio_fields = {'antecedentes':admin.HORIZONTAL,'otros':admin.HORIZONTAL,
+                    'densidad': admin.HORIZONTAL, 'birads': admin.VERTICAL,
                     'mamas':admin.VERTICAL,
                     'consistencia':admin.VERTICAL,
-                    'hallazgo_si':admin.VERTICAL,}
+                    'hallazgos': admin.VERTICAL,
+                    'hallazgo_si':admin.VERTICAL,
+                    }
 
 class AdminAntecedentes(admin.ModelAdmin):
     form = AntecedentesForm
     list_display = [
                     "registrado",
-                    "peso","talla",
+                    "peso","estatura",
                     "dire_actual", "de_quien",
                     "IMC","cirugia_mamaria","otras_cirugias",
                     "antecedentes","ante_fam",
@@ -134,7 +139,7 @@ class AdminAntecedentes(admin.ModelAdmin):
                     "tiempo_anti"]
     fieldsets = (
         ('PACIENTE',{
-            'fields':('registrado','peso','talla','IMC',('dire_actual','de_quien')),
+            'fields':('registrado','peso','estatura','IMC',('dire_actual','de_quien')),
         }),
         ('ANTECEDENTES PATOLOGICOS PERSONALES',{
             'fields':('cirugia_mamaria', 'otras_cirugias', 'antecedentes','atec_rt')
@@ -144,14 +149,14 @@ class AdminAntecedentes(admin.ModelAdmin):
                        'cancer_prostata','cancer_colon', 'cancer_otro')
         }),
         ('ANTECEDENTES HORMONALES',{
-            'fields': (('hijos','numero','edad_primero','amamanto','tiempo'),
-                       'anticonceptivos','tiempo_anti')
+            'fields': (('menarca','hijos','numero','edad_primero'),('amamanto','tiempo'),
+                       ('anticonceptivos','tiempo_anti'))
         }),
         ('MENOPAUSIA', {
             'fields': (('menopausia', 'edad_meno', 'anos_repro'), ('trh', 'trh_opciones'))
         }),
         ('ABORTOS', {
-            'fields': ('abortos', 'cuantos_abortos', 'primera_gesta', 'edad_gestacional')
+            'fields': (('abortos','tipo_aborto'), ('primera_gesta', 'edad_gestacional'),'cuantos_abortos')
         }),
 
     )
@@ -165,13 +170,15 @@ class AdminAntecedentes(admin.ModelAdmin):
                     'cancer_prostata':admin.HORIZONTAL,
                     'cancer_colon':admin.HORIZONTAL,
                     'cancer_otro':admin.HORIZONTAL,
+                    'menarca':admin.HORIZONTAL,
                     'hijos':admin.HORIZONTAL,
                     'amamanto':admin.HORIZONTAL,
                     'anticonceptivos':admin.HORIZONTAL,
                     'menopausia':admin.HORIZONTAL,
                     'trh':admin.HORIZONTAL,
-                    'trh_opciones':admin.HORIZONTAL,
+                    'trh_opciones':admin.VERTICAL,
                     'abortos':admin.HORIZONTAL,
+                    'tipo_aborto':admin.VERTICAL,
                     'primera_gesta':admin.HORIZONTAL,
                     }
 
@@ -186,6 +193,6 @@ admin.site.register(Antecedentes,AdminAntecedentes)
 # admin.site.register(Encuesta)
 admin.site.register(Mamografia,AdminMamo)
 
-admin.site.site_header = "FUNCA"
-admin.site.site_title = "Administracion del sitio"
+#admin.site.site_header = "FUNCA"
+#admin.site.site_title = "Administracion del sitio"
 
