@@ -97,6 +97,7 @@ class AdminMamo(admin.ModelAdmin):
         "des_birads",
         "mamas",
         "consistencia",
+        "hallaz",
         "hallazgo_si",
     ]
     fieldsets = (
@@ -113,7 +114,7 @@ class AdminMamo(admin.ModelAdmin):
                 'fields': ('eg', ('hallazgos','hallazgo'), 'des_birads')
             }),
             ('PALPACION', {
-                'fields': ('mamas', 'consistencia', 'hallazgo_si','descripcio')
+                'fields': ('mamas', 'consistencia', ('hallaz','hallazgo_si'),'descripcio')
             }),
     )
     radio_fields = {'antecedentes':admin.HORIZONTAL,'otros':admin.HORIZONTAL,
@@ -121,6 +122,7 @@ class AdminMamo(admin.ModelAdmin):
                     'mamas':admin.VERTICAL,
                     'consistencia':admin.VERTICAL,
                     'hallazgos': admin.VERTICAL,
+                    'hallaz':admin.VERTICAL,
                     'hallazgo_si':admin.VERTICAL,
                     }
 
@@ -142,7 +144,7 @@ class AdminAntecedentes(admin.ModelAdmin):
             'fields':('registrado','peso','estatura','IMC',('dire_actual','de_quien')),
         }),
         ('ANTECEDENTES PATOLOGICOS PERSONALES',{
-            'fields':('cirugia_mamaria', 'otras_cirugias', 'antecedentes','atec_rt')
+            'fields':('cirugia_mamaria', 'otras_cirugias', ('antecedentes_ca','antecedentes'), ('atec_rt','atc_rt'))
         }),
         ('ANTECEDENTES FAMILIARES',{
             'fields': (('ante_fam','candetalles'),'cancer_mama','cancer_ovario',
@@ -163,7 +165,9 @@ class AdminAntecedentes(admin.ModelAdmin):
     radio_fields = {'cirugia_mamaria':admin.HORIZONTAL,
                     'otras_cirugias':admin.HORIZONTAL,
                     'antecedentes':admin.HORIZONTAL,
+                    'antecedentes_ca': admin.HORIZONTAL,
                     'atec_rt':admin.HORIZONTAL,
+                    'atc_rt': admin.HORIZONTAL,
                     'ante_fam':admin.HORIZONTAL,
                     'cancer_mama':admin.HORIZONTAL,
                     'cancer_ovario':admin.HORIZONTAL,
@@ -193,6 +197,6 @@ admin.site.register(Antecedentes,AdminAntecedentes)
 # admin.site.register(Encuesta)
 admin.site.register(Mamografia,AdminMamo)
 
-#admin.site.site_header = "FUNCA"
-#admin.site.site_title = "Administracion del sitio"
+admin.site.site_header = "FUNCA"
+admin.site.site_title = "Administracion del sitio"
 
